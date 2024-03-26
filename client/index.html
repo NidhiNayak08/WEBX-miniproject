@@ -1,0 +1,46 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html ng-app="inventoryApp">
+  <head>
+    <title>Inventory Management</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="inventoryService.js"></script>
+    <script src="inventoryController.js"></script>
+  </head>
+  <body>
+    <div ng-controller="InventoryController">
+      <!-- Create New Inventory Form -->
+      <form
+        ng-submit="createInventory()"
+        action="http://localhost:3001/inventory"
+        method="post"
+      >
+        <label>Name:</label>
+        <input type="text" ng-model="newItem.name" required />
+
+        <label>Quantity:</label>
+        <input type="number" ng-model="newItem.quantity" required />
+
+        <button type="submit">Add Inventory</button>
+      </form>
+
+      <!-- Display Inventory Items -->
+      <ul>
+        <li ng-repeat="item in inventoryItems">
+          <input
+            type="text"
+            ng-model="item.name"
+            ng-blur="updateInventory(item)"
+          />
+          <input
+            type="number"
+            ng-model="item.quantity"
+            ng-blur="updateInventory(item)"
+          />
+          <button ng-click="deleteInventory(item._id, $index)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
